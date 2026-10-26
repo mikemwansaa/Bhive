@@ -12,7 +12,8 @@
 </head>
 <body>
 <section id="intro">
-<video id="v" autoplay muted playsinline preload="auto" src="video/bhive.mp4"></video>
+<video id="v" autoplay muted playsinline webkit-playsinline preload="auto" poster="img/poster.jpg" src="video/bhive.mp4"></video>
+<button id="play" type="button" aria-label="Play intro">&#9654;</button>
 <div class="stack">
 <img id="logo" src="img/bhive_logo.jpeg" alt="Bhive - click to replay intro" title="Replay">
 <a class="go" href="#menu">View the menu</a>
@@ -21,12 +22,27 @@
 <main id="menu"></main>
 <script src="menu.js"></script>
 <script>
-const intro=document.getElementById('intro'),v=document.getElementById('v');
-const done=()=>intro.classList.add('done');
-v.addEventListener('ended',done);v.addEventListener('error',done);
+const intro=document.getElementById('intro'),v=document.getElementById('v'),playBtn=document.getElementById('play');
+const done=()=>{intro.classList.add('done');playBtn.classList.remove('show')};
+v.muted=true;v.defaultMuted=true;
+function start(){
+  const p=v.play();
+  if(p&&p.catch)p.catch(()=>{});
+}
+v.addEventListener('playing',()=>playBtn.classList.remove('show'));
+v.addEventListener('ended',done);
+v.addEventListener('error',done);
 v.addEventListener('timeupdate',()=>{if(v.duration&&v.currentTime>v.duration-0.35)done()});
-v.play&&v.play().catch(done);
-document.getElementById('logo').onclick=()=>{intro.classList.remove('done');v.currentTime=0;v.play().catch(done)};
+v.addEventListener('loadeddata',start);
+v.addEventListener('canplay',start);
+start();
+// If the browser blocks autoplay, keep the video on screen and start it on the first tap, click, key or scroll
+['pointerdown','touchstart','keydown','wheel','scroll'].forEach(e=>addEventListener(e,()=>{
+  if(v.paused&&!intro.classList.contains('done')&&v.currentTime===0)start();
+},{passive:true}));
+setTimeout(()=>{if(v.paused&&!intro.classList.contains('done'))playBtn.classList.add('show')},1200);
+playBtn.onclick=start;
+document.getElementById('logo').onclick=()=>{intro.classList.remove('done');v.muted=true;v.currentTime=0;start()};
 </script>
 </body>
 </html>
