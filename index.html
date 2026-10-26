@@ -9,6 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>
+// Always open on the landing screen (ignore remembered scroll position and #menu in the URL)
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+if(location.hash)history.replaceState(null,'',location.pathname+location.search);
+</script>
 </head>
 <body>
 <section id="intro">
@@ -22,6 +27,11 @@
 <main id="menu"></main>
 <script src="menu.js"></script>
 <script>
+const top0=()=>scrollTo(0,0);
+top0();
+addEventListener('load',top0);
+addEventListener('pageshow',top0);
+document.querySelector('.go').addEventListener('click',e=>{e.preventDefault();document.getElementById('menu').scrollIntoView({behavior:'smooth'})});
 const intro=document.getElementById('intro'),v=document.getElementById('v'),playBtn=document.getElementById('play');
 const done=()=>{intro.classList.add('done');playBtn.classList.remove('show')};
 v.muted=true;v.defaultMuted=true;
