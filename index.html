@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bhive</title>
+<meta name="description" content="Bhive - Menu">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="intro">
+<video id="v" autoplay muted playsinline preload="auto" src="video/bhive.mp4"></video>
+<div class="stack">
+<img id="logo" src="img/bhive_logo.jpeg" alt="Bhive - click to replay intro" title="Replay">
+<a class="go" href="#menu">View the menu</a>
+</div>
+</section>
+<main id="menu"></main>
+<script src="menu.js"></script>
+<script>
+const intro=document.getElementById('intro'),v=document.getElementById('v');
+const done=()=>intro.classList.add('done');
+v.addEventListener('ended',done);v.addEventListener('error',done);
+v.addEventListener('timeupdate',()=>{if(v.duration&&v.currentTime>v.duration-0.35)done()});
+v.play&&v.play().catch(done);
+document.getElementById('logo').onclick=()=>{intro.classList.remove('done');v.currentTime=0;v.play().catch(done)};
+</script>
+</body>
+</html>
