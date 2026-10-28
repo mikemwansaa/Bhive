@@ -29,3 +29,5 @@ section:first-child h2{margin-top:0}
 .go:hover,.go:focus-visible{background:#fff;transform:translateY(-2px);outline:3px solid #e9b93f;outline-offset:3px}
 #menu{background:var(--bg);min-height:100svh}
 @media(prefers-reduced-motion:reduce){.stack,#intro video{transition:none}}
+#play{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;border:0;background:rgba(233,185,63,.92);color:#111;font-size:30px;padding-left:6px;cursor:pointer;display:none}
+#play.show{display:block}

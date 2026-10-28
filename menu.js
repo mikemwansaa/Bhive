@@ -74,7 +74,7 @@ PAGES.forEach(p => {
   pg.append(strip());
   if (p.head) {
     const hd = h("header", "head");
-    hd.append(h("span", "brand", "The B-Hive Café"), h("span", "title", "Menu"));
+    hd.append(h("span", "brand", "The Café B-Hive"), h("span", "title", "Menu"));
     pg.append(hd);
   }
   const cols = h("div", "cols");
